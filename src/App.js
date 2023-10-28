@@ -1,9 +1,10 @@
 import "./App.css";
+import AuthenticationForm from "./views/authenticate/AuthenticationForm";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header"></header>
+      <AuthenticationForm />
     </div>
   );
 }
