@@ -32,7 +32,7 @@ const LoginPage = ({ onLogin }) => {
   return (
     <div>
       <div className="header">
-        <h1>Login</h1>
+        <h1>Enter credentials</h1>
       </div>
       <div className="form-content">
         <div className="credentials-left">
@@ -48,8 +48,9 @@ const LoginPage = ({ onLogin }) => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-
-        <Button onClick={handleLogin} text="Log in" />
+        <div className="btn-css">
+          <Button onClick={handleLogin} text="Log in" />
+        </div>
       </div>
     </div>
   );

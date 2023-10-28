@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Button from "../../components/BasicButton/BasicButton";
+
 import {
   GoogleMap,
   LoadScript,
@@ -6,7 +8,7 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 
-const ScooterMap = ({ scooters }) => {
+const ScooterMap = ({ scooters, onScooterBooked }) => {
   const mapStyles = { height: "100vh", width: "100%" };
   const defaultCenter = { lat: 45.76, lng: 21.22 };
 
@@ -31,6 +33,10 @@ const ScooterMap = ({ scooters }) => {
       }
 
       const data = await response.json();
+
+      onScooterBooked(data.scooter);
+
+      setSelectedScooter(null);
     } catch (error) {
       console.error("Error booking scooter:", error);
     }
@@ -45,8 +51,11 @@ const ScooterMap = ({ scooters }) => {
             scooter.location.longitude.$numberDecimal
           );
 
+          if (scooter.status === "booked") {
+            return null;
+          }
+
           return (
-            // scooter.status !== "booked" && (
             <Marker
               key={scooter._id}
               position={{ lat: latitude, lng: longitude }}
@@ -54,7 +63,6 @@ const ScooterMap = ({ scooters }) => {
                 setSelectedScooter(scooter);
               }}
             />
-            // )
           );
         })}
 

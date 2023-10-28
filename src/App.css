@@ -36,3 +36,8 @@
 .credentials-right {
   margin-left: 20px;
 }
+
+.btn-css {
+  display: flex;
+  margin-left: 20px;
+}

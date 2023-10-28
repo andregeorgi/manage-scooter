@@ -12,6 +12,18 @@ function App() {
     setIsAuthenticated(true);
   };
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+
+  const updateScootersAfterBooking = (updatedScooter) => {
+    setScooters((prevScooters) =>
+      prevScooters.map((scooter) =>
+        scooter._id === updatedScooter._id ? updatedScooter : scooter
+      )
+    );
+  };
+
   useEffect(() => {
     if (isAuthenticated) {
       const fetchData = async () => {
@@ -48,7 +60,11 @@ function App() {
           path="/scooter-map"
           element={
             isAuthenticated ? (
-              <ScooterMap scooters={scooters} />
+              <ScooterMap
+                onLogout={handleLogout}
+                scooters={scooters}
+                onScooterBooked={updateScootersAfterBooking}
+              />
             ) : (
               <Navigate to="/" replace />
             )
