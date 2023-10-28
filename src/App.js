@@ -12,10 +12,6 @@ function App() {
     setIsAuthenticated(true);
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-  };
-
   const updateScootersAfterBooking = (updatedScooter) => {
     setScooters((prevScooters) =>
       prevScooters.map((scooter) =>
@@ -50,7 +46,7 @@ function App() {
           path="/"
           element={
             isAuthenticated ? (
-              <Navigate to="/scooter-map" replace />
+              <Navigate to="/scooter-map" />
             ) : (
               <LoginPage onLogin={handleLogin} />
             )
@@ -61,12 +57,11 @@ function App() {
           element={
             isAuthenticated ? (
               <ScooterMap
-                onLogout={handleLogout}
                 scooters={scooters}
                 onScooterBooked={updateScootersAfterBooking}
               />
             ) : (
-              <Navigate to="/" replace />
+              <Navigate to="/" />
             )
           }
         />
