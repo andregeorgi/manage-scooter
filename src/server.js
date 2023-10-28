@@ -55,6 +55,32 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+app.post("/api/scooter/:id/book", async (req, res) => {
+  try {
+    const scooterId = req.params.id;
+    const userId = req.body.userId;
+
+    const scooter = await Scooters.findById(scooterId);
+    if (!scooter) {
+      return res.status(404).json({ message: "Scooter not found" });
+    }
+
+    if (scooter.status === "booked") {
+      return res.status(400).json({ message: "Scooter is already booked" });
+    }
+
+    scooter.status = "booked";
+    scooter.bookedBy = userId;
+
+    await scooter.save();
+
+    res.json({ message: "Scooter booked successfully", scooter });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

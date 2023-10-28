@@ -1,9 +1,22 @@
 const mongoose = require("mongoose");
 
 const ScooterSchema = new mongoose.Schema({
-  name: String,
-  batteryLevel: Number,
-  status: String,
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  batteryLevel: {
+    type: Number,
+    required: true,
+    min: 0,
+    max: 100,
+  },
+  status: {
+    type: String,
+    enum: ["available", "booked"],
+    default: "available",
+  },
   location: Object,
 });
 

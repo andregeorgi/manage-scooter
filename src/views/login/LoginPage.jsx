@@ -35,11 +35,13 @@ const LoginPage = ({ onLogin }) => {
         <h1>Login</h1>
       </div>
       <div className="form-content">
-        <InputField
-          value={username}
-          label="Username"
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <div className="credentials-left">
+          <InputField
+            value={username}
+            label="Username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
         <InputField
           value={password}
           label="Password"
