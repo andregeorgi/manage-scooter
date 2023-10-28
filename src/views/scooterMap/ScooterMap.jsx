@@ -1,18 +1,17 @@
-import React from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import React, { useState } from "react";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
 
 const ScooterMap = ({ scooters }) => {
-  console.log(scooters);
+  const mapStyles = { height: "100vh", width: "100%" };
+  const defaultCenter = { lat: 45.76, lng: 21.22 };
+  console.log(scooters); // Add this in your ScooterMap component to check the received data
 
-  const mapStyles = {
-    height: "100vh",
-    width: "100%",
-  };
-
-  const defaultCenter = {
-    lat: 45.76,
-    lng: 21.22,
-  };
+  const [selectedScooter, setSelectedScooter] = useState(null);
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyAyypPijd6Fm4aZaetmRIkfUjRs4Fm5hQY">
@@ -26,9 +25,32 @@ const ScooterMap = ({ scooters }) => {
             <Marker
               key={scooter._id}
               position={{ lat: latitude, lng: longitude }}
+              onClick={() => {
+                setSelectedScooter(scooter);
+              }}
             />
           );
         })}
+
+        {selectedScooter && (
+          <InfoWindow
+            position={{
+              lat: parseFloat(selectedScooter.location.latitude.$numberDecimal),
+              lng: parseFloat(
+                selectedScooter.location.longitude.$numberDecimal
+              ),
+            }}
+            onCloseClick={() => {
+              setSelectedScooter(null);
+            }}
+          >
+            <div>
+              <h2>{selectedScooter.name}</h2>
+              <p>Battery Level: {selectedScooter.batteryLevel}%</p>
+              <p>Status: {selectedScooter.status}</p>
+            </div>
+          </InfoWindow>
+        )}
       </GoogleMap>
     </LoadScript>
   );
